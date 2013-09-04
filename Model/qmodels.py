@@ -71,10 +71,6 @@ class Body:
         for pred in self.node_predessors(node).keys():
             self._compartments[node][1][pred]*=coeff
 
-
-
-
-
     def __str__(self):
         output=''
 
@@ -135,8 +131,9 @@ class QBodyModel(QtCore.QAbstractTableModel, nx.DiGraph):
     def __init__(self,parent=None):
         nx.DiGraph.__init__(self)
         QtCore.QAbstractTableModel.__init__(self, parent)
-    def set_time(self,duration,resolution):
-        self.graph['time']=np.arange(0,duration,resolution)
+    def set_time(self,time):
+        self.graph['time']=time
+
     def update_profiles(self):
         for i in self.nodes():
             if not self.node[i]['distribution']=='delta':
@@ -184,8 +181,8 @@ class QBodyModel(QtCore.QAbstractTableModel, nx.DiGraph):
         for node,a in zip(self.linklist,attrs):
             self.node[node[0]][node[1]] = a
         self.update_profiles()
-        self.flow('RV')
-        return self.node['RV']['conc']
+        self.flow('Lungs')
+        return self.node['Lungs']['conc']
 
     def setnodeattrslinks(self,linklist):
         self.linklist=linklist
@@ -268,7 +265,7 @@ class QEdgeModel(QtCore.QAbstractTableModel):
         QtCore.QAbstractTableModel.__init__(self, parent)
         self.model=qBodyModel
 
-        self._nodename='RV'
+        self._nodename='Lungs'
     def nodename(self):
         return self._nodename
     def change_nodename(self, index):

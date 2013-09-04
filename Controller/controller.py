@@ -136,6 +136,8 @@ class CurrentQt(Editor2.Ui_MainWindow):
         self.gui.tableView_nodes.setModel(self.bodymodel)
         self.gui.tableView_edges.setModel(self.edgemodel)
 
+        self.gui.tableView_nodes.horizontalHeader().setResizeMode (1)
+        self.gui.tableView_edges.horizontalHeader().setResizeMode (1)
         #----BUTTONS------------------------
         self.gui.pushButton_addNode.clicked.connect(self.addnode)
         self.gui.pushButton_removeNode.clicked.connect(self.removenode)
@@ -199,9 +201,15 @@ class CurrentQt(Editor2.Ui_MainWindow):
                 continue
 
     def simulation(self):
-        self.bodymodel.set_time(self.gui.spinBox_time.value(),self.gui.doubleSpinBox_timeres.value())
+        if self.gui.radioButton_3.isChecked():
+            t=np.arange (0,self.gui.spinBox_time.value(),self.gui.doubleSpinBox_timeres.value())
+            print t
+        elif self.gui.radioButton_4.isChecked():
+            t= np.array(map( float,str(self.gui.lineEdit.text()).split(',')))
+
+        self.bodymodel.set_time(t)
         self.bodymodel.update_profiles()
-        self.bodymodel.flow( 'RV' )
+        self.bodymodel.flow( 'Lungs' )
         self.draw_concs()
 
     def remove_edge(self):
@@ -239,6 +247,7 @@ class CurrentQt(Editor2.Ui_MainWindow):
         else:
             self.bodymodel.insertRow(nodename=nodename,attrs= attrs)
         self.gui.tableView_nodes.resizeColumnsToContents()
+
 
     def removenode(self):
         for nodeidx in self.gui.tableView_nodes.selectedIndexes():

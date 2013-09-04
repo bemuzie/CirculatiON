@@ -1,1 +1,1 @@
-print 'started'fsdsdf
+from View import Editor2
