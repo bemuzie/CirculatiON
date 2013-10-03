@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file './View/Editor2.ui'
 #
-# Created: Wed Sep 04 04:50:46 2013
+# Created: Wed Oct 02 16:18:15 2013
 #      by: PyQt4 UI code generator 4.8.6
 #
 # WARNING! All changes made in this file will be lost!
@@ -358,20 +358,4 @@ class Ui_MainWindow(object):
         self.toolBar.addSeparator()
         self.toolBar.addAction(self.actionSnap_graph)
         self.toolBar.addAction(self.actionExport_pics)
-        self.label.setBuddy(self.doubleSpinBox_loc)
-        self.label_2.setBuddy(self.doubleSpinBox_scale)
-        self.label_3.setBuddy(self.doubleSpinBox_smth)
-        self.label_5.setBuddy(self.doubleSpinBox_weight)
-
-        self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def retranslateUi(self, MainWindow):
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_graph), QtGui.QApplication.translate("MainWindow", "Graph", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_simulation), QtGui.QApplication.translate("MainWindow", "Simulation", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_profiles), QtGui.QApplication.translate("MainWindow", "Profiles", None, QtGui.QApplication.UnicodeUTF8))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QtGui.QApplication.translate("MainWindow", "Fitting", None, QtGui.QApplication.UnicodeUTF8))
-
-from mplwidget import MplWidget
-import icons_rc
+       

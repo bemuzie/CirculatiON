@@ -88,8 +88,8 @@ injectiontest.set_attrs(0,12,2)
 
 
 bodytest['IVC'].add_successor(  bodytest['Lungs'],  0.5)
-bodytest['GI'].add_successor(  bodytest['Lungs'],   0.4)
-bodytest['SVC'].add_successor(  bodytest['Lungs'],  0.1)
+bodytest['GI'].add_successor(  bodytest['Lungs'],   0.1)
+bodytest['SVC'].add_successor(  bodytest['Lungs'],  0.3)
 bodytest['Lungs'].add_successor(bodytest['IVC'],    1)
 bodytest['Lungs'].add_successor(bodytest['SVC'],    1)
 bodytest['Lungs'].add_successor(bodytest['GI'],     1)
@@ -135,12 +135,53 @@ def makebody_array(population,time_line=time_line):
         node.make_profile()
     injectiontest.make_delta()
     bodytest['Lungs']()
-    o=bodytest['Lungs'].concentration
+    o=bodytest['GI'].concentration
+    p=bodytest['GI'].profile
     
     if time_line:
       o=np.array([o[:,i] for i in time_line]).swapaxes(0,1)
       
     return o
+def makebody_array2(population,time_line=time_line):
+    print population.shape
+    setattrs_from_array(population,links)
+    for node in bodytest.values():
+        node.make_profile()
+    injectiontest.make_delta()
+    bodytest['Lungs']()
+    o=bodytest['GI'].concentration
+    p=bodytest['GI'].profile
+    
+    if time_line:
+      o=np.array([o[:,i] for i in time_line]).swapaxes(0,1)
+     
+    return p
+
+a=np.array([[3,3,6,3,7,10,2,5,3,3,5,i,3000] for i in np.arange(10,20,0.02) ])
+
+
+curves=makebody_array(a, time_line=None)
+k=curves.shape[0]
+amp=1
+for i in curves:
+  amp*=1-1./k
+
+  k-=1
+  r=1-1*amp
+  b=1*amp
+  g=0
+  if np.abs(r-b)<0.45:
+    g=0.3*amp
+
+  plt.plot(i,color=(r,g,b))
+  
+"""
+for i in makebody_array2(a, time_line=None):
+  plt.subplot(212)
+  plt.plot(i,color=(1,0,1*k))
+"""
+plt.show()
+
 def plotdistributions(chromosome_c,chromosome_p,*args):
   time=time_array
   
@@ -212,7 +253,7 @@ def test(loops):
 
 
 
-test(100000)
+#test(100000)
 
 
 """
